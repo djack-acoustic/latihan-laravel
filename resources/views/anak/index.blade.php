@@ -5,33 +5,29 @@
         {{session('success')}}
     @endif
     <br>
-    <a href="{{url('pegawai/create')}}">Tambah</a>
+    <a href="{{url('anak/create')}}">Tambah</a>
     <table>
         <tr>
             <th>No</th>
+            <th>Bapak</th>
             <th>Nama</th>
-            <th>Alamat</th>
-            <th>No Hp</th>
-            <th>Anak</th>
+            <th>Tempat Lahir</th>
+            <th>Tanggal Lahir</th>
             <th>Action</th>
         </tr>
         @php
             $no=1;
         @endphp
-        @foreach ($pegawai as $row)
+        @foreach ($anak as $row)
             <tr>
                 <td>{{$no++}}</td>
-                <td>{{$row->nama_pegawai}}</td>
-                <td>{{$row->alamat}}</td>
-                <td>{{$row->no_hp}}</td>
+                <td>{{$row->bapak->nama_pegawai}}</td>
+                <td>{{$row->nama}}</td>
+                <td>{{$row->tempat_lahir}}</td>
+                <td>{{$row->tanggal_lahir}}</td>
                 <td>
-                    @foreach($row->anak as $ank)
-                        {{$ank->nama}}<br>
-                    @endforeach
-                </td>
-                <td>
-                    <a href="{{url('pegawai/'.$row->id.'/edit')}}">Edit</a>
-                    <a href="{{url('pegawai-delete/'.$row->id)}}">Delete</a>
+                    <a href="{{url('anak/'.$row->id.'/edit')}}">Edit</a>
+                    <a href="{{url('anak-delete/'.$row->id)}}">Delete</a>
                     <a href="{{url('anak-pagawai/'.$row->id)}}">Lihat Anak</a>
                 </td>
             </tr>

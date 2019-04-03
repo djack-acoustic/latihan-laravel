@@ -4,26 +4,31 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Pegawai extends Model
+class Anak extends Model
 {
-    protected $table = 'mst_pegawai';
-    protected $fillable = ['nama_pegawai','alamat','no_hp'];
+    protected $table = 'anak';
+    protected $fillable = ['pegawai_id','nama','tempat_lahir','tanggal_lahir'];
 
     public static function findAll(){
-        return Pegawai::with(['anak'])->get();
+        return self::all();
     }
 
     public static function findById($id){
         // return self::where('nama_field','=',$id)->first(); // KETIKA FIELD BUKAN ID
-        return Pegawai::find($id);
+        return self::find($id);
+    }
+
+    public static function findByPegawaiId($id){
+        // return self::where('nama_field','=',$id)->first(); // KETIKA FIELD BUKAN ID
+        return self::where('pegawai_id','=',$id)->get();
     }
 
     // SIMPAN DATA CARA PERTAMA
     public static function storeData1($request){
-        $data               = new self();
-        $data->nama_pegawai = $request->nama_pegawai;
-        $data->alamat       = $request->alamat;
-        $data->no_hp        = $request->no_hp;
+        $data                = new self();
+        $data->nama          = $request->nama_pegawai;
+        $data->tempat_lahir  = $request->tempat_lahir;
+        $data->tanggal_lahir = $request->tanggal_lahir;
         $data->save();
     }
     
@@ -36,9 +41,9 @@ class Pegawai extends Model
     // UPDATE DATA
     public static function updateData($id, $request){
         $data               = self::find($id);
-        $data->nama_pegawai = $request->nama_pegawai;
-        $data->alamat       = $request->alamat;
-        $data->no_hp        = $request->no_hp;
+        $data->nama          = $request->nama_pegawai;
+        $data->tempat_lahir  = $request->tempat_lahir;
+        $data->tanggal_lahir = $request->tanggal_lahir;
         $data->save();
     }
 
@@ -52,13 +57,8 @@ class Pegawai extends Model
         $delete->delete();
     }
 
-    public static function jumlahPegawai(){
-        return self::count();
-    }
-
     // RELATION
-    public function anak()
-    {
-        return $this->hasMany('App\Anak','pegawai_id','id');
+    public function bapak(){
+        return $this->belongsTo('App\Pegawai','pegawai_id','id');
     }
 }

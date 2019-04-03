@@ -3,22 +3,29 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Anak;
 use App\Pegawai;
 
-class PegawaiController extends Controller
+class AnakController extends Controller
 {
     public function index(){
-        $pegawai = Pegawai::findAll();
-        return view('pegawai.index',compact('pegawai'));
+        $anak = Anak::findAll();
+        return view('anak.index',compact('anak'));
+    }
+
+    public function getAnakByPegawaiId($id){
+        $pegawai = Anak::findByPegawaiId($id);
+        return view('anak.index',compact('pegawai'));
     }
     
     public function create(){
-        return view('pegawai.create');
+        $pegawai = Pegawai::findAll();
+        return view('anak.create',compact('pegawai'));
     }
 
     public function edit($id){
-        $pegawai = Pegawai::findById($id);
-        return view('pegawai.edit',compact('pegawai'));
+        $pegawai = Anak::findById($id);
+        return view('anak.edit',compact('pegawai'));
     }
 
     public function show($id){
@@ -28,7 +35,7 @@ class PegawaiController extends Controller
     public function store(Request $request){
         \DB::beginTransaction();
         try{
-            Pegawai::storeData1($request);
+            Anak::storeData1($request);
             // Pegawai::storeData2($request->all());
         }catch(\Exception $e){
             \DB::rollback();
@@ -44,7 +51,7 @@ class PegawaiController extends Controller
     public function update($id, Request $request){
         \DB::beginTransaction();
         try{
-            Pegawai::updateData($id, $request);
+            Anak::updateData($id, $request);
         }catch(\Exception $e){
             if(env('APP_ENV')=='local'){
                 dd($e);
@@ -59,7 +66,7 @@ class PegawaiController extends Controller
     public function destroy($id){
         \DB::beginTransaction();
         try{
-            Pegawai::deleteData($id);
+            Anak::deleteData($id);
         }catch(\Exception $e){
             if(env('APP_ENV')=='local'){
                 dd($e);
@@ -70,5 +77,4 @@ class PegawaiController extends Controller
         \DB::commit();
         return redirect()->back()->with('success','Data berhasil disimpan');
     }
-
 }

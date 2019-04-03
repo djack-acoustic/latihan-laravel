@@ -1,18 +1,16 @@
 @extends('template.index')
-@section('title', 'Pagawai')
+@section('title', 'Anak - Pagawai')
 @section('content')
     @if(session()->has('success'))
         {{session('success')}}
     @endif
     <br>
-    <a href="{{url('pegawai/create')}}">Tambah</a>
     <table>
         <tr>
             <th>No</th>
             <th>Nama</th>
-            <th>Alamat</th>
-            <th>No Hp</th>
-            <th>Anak</th>
+            <th>Tempat Lahir</th>
+            <th>Tanggal Lahir</th>
             <th>Action</th>
         </tr>
         @php
@@ -24,11 +22,6 @@
                 <td>{{$row->nama_pegawai}}</td>
                 <td>{{$row->alamat}}</td>
                 <td>{{$row->no_hp}}</td>
-                <td>
-                    @foreach($row->anak as $ank)
-                        {{$ank->nama}}<br>
-                    @endforeach
-                </td>
                 <td>
                     <a href="{{url('pegawai/'.$row->id.'/edit')}}">Edit</a>
                     <a href="{{url('pegawai-delete/'.$row->id)}}">Delete</a>

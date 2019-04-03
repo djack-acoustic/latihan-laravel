@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('template.index');
+    return view('welcome');
 });
 
 Route::get('agung', function () {
@@ -36,3 +36,10 @@ Route::resource('pegawai','PegawaiController')->except([
 ]);
 Route::post('pegawai-update/{id}','PegawaiController@update');
 Route::get('pegawai-delete/{id}','PegawaiController@destroy');
+
+// ANAK
+Route::resource('anak','AnakController')->except([
+    'update', 'destroy'
+]);
+Route::post('anak-update/{id}','AnakController@update');
+Route::get('anak-delete/{id}','AnakController@destroy');
